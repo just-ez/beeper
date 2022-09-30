@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+    <style>
+        .chat {
+            width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        ul {
+            list-style: none;
+        }
+        ul li {
+            width: fit-content;
+            background-color: rgba(0, 238, 255, 0.116);
+            color: #000;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+        }
+        .input {
+            display: flex;
+            align-items: center;
+        }
+        .input textarea {
+            width: 400px;
+            height: 50px;
+        }
+        .input button {
+            padding: 18px;
+        }
+    </style>
+</head>
+<body>
+   <div class="chat">
+     <ul></ul>
+    <div class="input">
+        <textarea name="" id="" cols="30" rows="10" placeholder="type message"></textarea>
+    <button>send</button>
+    </div>
+   </div>
+</body>
+</html>
+
+<script defer>
+    const sockect = io('ws://localhost:3000');
+
+    sockect.on('message', text => {
+        const el = document.createElement('li')
+        el.innerHTML = text
+        document.querySelector('ul').appendChild(el)
+    })
+
+    document.querySelector('button').onclick = ()=> {
+
+        const text = document.querySelector('textarea').value
+        sockect.emit('message', text)
+    }
+</script>
