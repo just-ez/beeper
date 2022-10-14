@@ -1,9 +1,15 @@
 const { success, error } = require('../utils/baseController')
 const User = require('../service/user')
 
+
+module.exports.getAllUsers = async (req,res) => {
+
+}
+
 module.exports.createUser = async (req,res) => {
    try {
      const user = await new User(req.body).createUser()
+     res.cookie('user_Id', user)
     if (user) return success(res,user,'user created',200)
    }
    catch (err) {
@@ -13,10 +19,8 @@ module.exports.createUser = async (req,res) => {
 
 module.exports.getUserById = async (req,res) => {
    try {
-      const user = await new User({
-         Id: req.params.Id, 
-         ...req.body
-      }).getUserById()
+      console.log(req.decoded);
+      const user = await new User( req.decoded._id ).getUserById()
       if (user) return success(res,user,200)
    }
    catch (err) {

@@ -5,7 +5,7 @@ const Usermodel = require('../models/user')
 
 
 module.exports = async (req,res,next)=>{
-    const token =  req.headers.authorization 
+    const token =  req.cookies.user_Id
     try {
         if (token) {
             const noBearer = token.replace(/Bearer\s/gi, '')

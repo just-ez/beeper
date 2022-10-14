@@ -5,6 +5,10 @@ class User {
     constructor(data) {
         this.data = data
     }
+    async getAllUsers() {
+      const users = await userModel.find({})
+      return users
+    }
     async createUser() {
         const Data = this.data
         const user = new userModel(Data)
